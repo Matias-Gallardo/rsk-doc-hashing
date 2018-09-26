@@ -67,7 +67,7 @@ contract Notary_tokkenit is Owned, Mortal {
         _hash (bytes32) = hash of the document to be checked (SHA3 keccak-256)
     */
     function checkProof(bytes32 _hash) public view  returns (bool) {
-        return book[_hash].sender != address(0x0);
+        return book[_hash].sender == address(0x0);
     }
 
     /*
@@ -77,7 +77,7 @@ contract Notary_tokkenit is Owned, Mortal {
         _hash (bytes32) = hash of the document (SHA3 keccak-256)
     */
     function getMetadata(bytes32 _hash) public view returns (bytes32 hash, address sender){
-        if (!checkProof(_hash)) return;
+        if (checkProof(_hash)) return;
         sender = book[_hash].sender;
         return (_hash, sender);
     }
